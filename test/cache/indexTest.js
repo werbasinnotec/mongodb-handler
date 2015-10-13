@@ -28,8 +28,8 @@ suite('cache ', function () {
     done();
   });
 
-  test('cache.set returns true when insert is granted and Operation is in cache', function (done) {
-    assert.that(cache.set('INSERT', 'foo', 'bar')).is.true();
+  test('cache.set returns a index when insert is granted and Operation is in cache', function (done) {
+    assert.that(cache.set('INSERT', 'foo', 'bar')).is.greaterThan(0);
     assert.that(cache.read()[0].method).is.equalTo('INSERT');
     done();
   });
@@ -47,7 +47,7 @@ suite('cache ', function () {
   });
 
   test('cache.delete returns true when delete is granted. (with multiple inserts)', function (done) {
-    assert.that(cache.set('INSERT', 'foo1', 'bar1')).is.true();
+    assert.that(cache.set('INSERT', 'foo', 'bar')).is.greaterThan(0);
     assert.that(cache.delete(cache.read()[0].index)).is.true();
     done();
   });
