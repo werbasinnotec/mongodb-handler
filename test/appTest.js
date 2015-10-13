@@ -32,7 +32,7 @@ suite('Test function mongodb-handler ', function () {
 
   test('mongodb-handler throws an error when method is not avaiable', function (done) {
     assert.that(function () {
-      mdbhandler('NOT', { foo: 'bar' }, { dbuser: 'test' });
+      mdbhandler('NOT', { foo: 'bar' }, { dbhost: 'test', dbport: 123, dbuser: 'foo', dbname: 'bar', dbpassword: '123' });
     }).is.throwing('Unknow method to switch');
     done();
   });

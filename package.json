@@ -15,7 +15,9 @@
   "main": "lib/app.js",
   "dependencies": {
     "log": "1.4.0",
-    "mongodb": "^2.0.45"
+    "moment": "^2.10.6",
+    "mongodb": "^2.0.45",
+    "node-cache": "^3.0.0"
   },
   "repository": {
     "type": "git",
