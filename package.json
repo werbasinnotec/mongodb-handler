@@ -1,0 +1,34 @@
+{
+  "name": "mongodb-handler",
+  "version": "0.0.1",
+  "description": "easy NPM Modul to handle all mongodb operations as global",
+  "contributors": [
+    {
+      "name": "Joe Herwig",
+      "email": "joachim.herwig@werbas-ag.com"
+    },
+    {
+      "name": "Martin Wiesmüller",
+      "email": "martin.wiesmueller@werbas-ag.com"
+    }
+  ],
+  "main": "lib/app.js",
+  "dependencies": {
+    "log": "1.4.0",
+    "mongodb": "^2.0.45"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:werbasinnotec/mongodb-handler.git"
+  },
+  "keywords": [
+    "mongodb",
+    "global"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "assertthat": "^0.6.0",
+    "grunt": "0.4.5",
+    "tourism": "0.20.1"
+  }
+}
