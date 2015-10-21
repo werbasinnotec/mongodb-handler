@@ -9,10 +9,9 @@ suite('cache ', function () {
     done();
   });
 
-  test('cache.read returns an array.', function (done) {
-    assert.that(function () {
-      cache.read();
-    }).is.not.greaterThan(0);
+  test('cache.read returns the insert object', function (done) {
+    cache.set('INSERT', 'foo', 'bar');
+    assert.that(cache.read()).is.ofType('object');
     done();
   });
 
@@ -54,11 +53,6 @@ suite('cache ', function () {
 
   test('cache.delete returns true when delete is granted. (With multiple inserts)', function (done) {
     assert.that(cache.delete(cache.read()[0].index)).is.true();
-    done();
-  });
-
-  test('cache.delete returns false when delete is not granted.', function (done) {
-    assert.that(cache.delete('12345')).is.true();
     done();
   });
 });
