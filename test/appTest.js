@@ -30,6 +30,64 @@ suite('Test function mongodb-handler ', function () {
     done();
   });
 
+  test('mongodb-handler callback true when insert is granted', function (done) {
+    this.timeout(6 * 1000);
+
+    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+      assert.that(err).is.equalTo(null);
+      assert.that(cb).is.true();
+      done();
+    });
+  });
+
+  test('mongodb-handler callback true when update is granted', function (done) {
+    this.timeout(6 * 1000);
+
+    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+      assert.that(err).is.equalTo(null);
+      assert.that(cb).is.true();
+      done();
+    });
+
+    mdbhandler('UPDATE', { coll: 'test', criteria: { foo: 'bar' }, obj: { foo: 'large' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+      assert.that(err).is.equalTo(null);
+      assert.that(cb).is.true();
+      done();
+    });
+  });
+
+  test('mongodb-handler callback true when delete is granted', function (done) {
+    this.timeout(6 * 1000);
+
+    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+      assert.that(err).is.equalTo(null);
+      assert.that(cb).is.true();
+      done();
+    });
+
+    mdbhandler('DELETE', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+      assert.that(err).is.equalTo(null);
+      assert.that(cb).is.true();
+      done();
+    });
+  });
+
+  test('mongodb-handler callback a object when fetch is granted', function (done) {
+    this.timeout(6 * 1000);
+
+    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+      assert.that(err).is.equalTo(null);
+      assert.that(cb).is.true();
+      done();
+    });
+
+    mdbhandler('FETCH', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+      assert.that(err).is.equalTo(null);
+      assert.that(cb).is.ofType('object');
+      done();
+    });
+  });
+
   test('mongodb-handler throws an error when method is not avaiable', function (done) {
     assert.that(function () {
       mdbhandler('NOT', { foo: 'bar' }, { dbhost: 'test', dbport: 123, dbuser: 'foo', dbname: 'bar', dbpassword: '123' });
