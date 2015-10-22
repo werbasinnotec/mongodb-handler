@@ -41,7 +41,7 @@ suite('execInsertinDB ', function () {
       const stampid = cache.set('INSERT', options, config);
 
       execInsertinDB(stampid, function (err) {
-        assert.that(err.err).is.equalTo('ErrorOnCollection');
+        assert.that(err.err).is.equalTo('ErrorOnExecution');
         done();
       });
     });

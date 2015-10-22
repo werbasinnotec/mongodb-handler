@@ -41,7 +41,7 @@ suite('execDeleteinDB ', function () {
       const stampid = cache.set('DELETE', options, config);
 
       execDeleteinDB(stampid, function (err) {
-        assert.that(err.err).is.equalTo('ErrorOnCollection');
+        assert.that(err.err).is.equalTo('ErrorOnExecution');
         done();
       });
     });

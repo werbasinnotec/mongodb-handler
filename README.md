@@ -1,6 +1,6 @@
 # NPM Module mongodb-handler
 
-This module handles all mongodb-transactions over a global calling
+This module handles all mongodb-transactions over a global calling. As secondary the module caches all data change operations and removes the operation only from cache when the execution is done.
 
 ### Installation
 
@@ -27,55 +27,97 @@ Set the method of the transaction. Following methods are available:
 
 ```javascript
 const options = { coll: 'test', obj: { foo: 'bar' } }
+const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
 
-mdb-handler('DELETE', options, config);
+mdb-handler('DELETE', options, config, function (err, cb) {
+    if (err) {
+        throw err
+    }
+    // Implementate your code...
+});
 ```
-This method will delete all object with 'foo' / 'bar' in collection 'test'
+This method will delete all object with 'foo' / 'bar' in collection 'test'.
+
+When your mongodb have no authentication, the parameters dbuser and dbpassword can removed.
 
 ###### INSERT
 =====
 ```javascript
 const options = { coll: 'test', obj: { foo: 'bar' } }
+const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
 
-mdb-handler('INSERT', options, config);
+mdb-handler('INSERT', options, config, function (err, cb) {
+    if (err) {
+        throw err
+    }
+    // Implementate your code...
+});
 ```
 This method will insert a object with 'foo' / 'bar' in collection 'test'
+
+When your mongodb have no authentication, the parameters dbuser and dbpassword can removed.
 
 ###### FETCH
 =====
 ```javascript
 const options = { coll: 'test', obj: { foo: 'bar' } }
+const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
 
-mdb-handler('FETCH', options, config);
+mdb-handler('FETCH', options, config, function (err, cb) {
+    if (err) {
+        throw err
+    }
+    // Implementate your code...
+});
 ```
 This method will fetch a object with 'foo' / 'bar' in collection 'test'
+
+
 
 ###### UPDATE
 ======
 ```javascript
-const options = { coll: 'test', criteria: 'crit', update: 'upd' }
+const options = { coll: 'test', criteria: 'crit', obj: { foo: 'bar' }}
+const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
 
-mdb-handler('UPDATE', options, config);
+mdb-handler('UPDATE', options, config, function (err, cb) {
+    if (err) {
+        throw err
+    }
+    // Implementate your code...
+});
 ```
+
+###### ADDUSER
+======
+```javascript
+const options = { coll: 'test', criteria: 'crit', update: 'upd' }
+const config = { admindbuser: 'admin',  admindbpassword: 'password', dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
+
+mdb-handler('ADDUSER', options, config, function (err, cb) {
+    if (err) {
+        throw err
+    }
+    // Implementate your code...
+});
+```
+
 This method will update all objects with named critera in collection 'coll'.
+When your mongodb have no authentication, the parameters dbuser and dbpassword can removed.
 
-#### config:
+### Callback Error:
 
-Set the config for the transaction:
-
-
-
-        { admindbuser: 'admin',
-        admindbpassword: 'password',
-        dbuser: 'productivuser',
-        dbpassword: 'password',
-        dbport: 27020,
-        dbhost: 'host',
-        dbname: 'productivdb' }
-
-#### adminuser vs dbuser
-This module will carry out all operations with the dbuser from the config. Is the dbuser not avaiable the module add this user automatically in the database.
-
+The errorcallback can response follow objects:
+```
+// When the database-connection is in timeout
+{
+err: 'timeout'
+}
+// When the execution is not successful
+{
+err: 'ErrorOnExecution'
+}
+```
 ## License
 
 The MIT License (MIT)

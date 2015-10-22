@@ -47,6 +47,7 @@ suite('cache ', function () {
 
   test('cache.delete returns true when delete is granted.', function (done) {
     const timestampid = cache.set('INSERT', 'foo', 'bar');
+
     assert.that(cache.delete(timestampid)).is.true();
     done();
   });
