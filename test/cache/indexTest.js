@@ -45,13 +45,9 @@ suite('cache ', function () {
     done();
   });
 
-  test('cache.delete returns true when delete is granted. (with multiple inserts)', function (done) {
-    assert.that(cache.set('INSERT', 'foo', 'bar')).is.greaterThan(0);
-    assert.that(cache.set('INSERT', 'foo2', 'bar2')).is.greaterThan(0);
-    assert.that(cache.set('INSERT', 'foo3', 'bar3')).is.greaterThan(0);
-    assert.that(cache.delete(cache.read()[0].index)).is.true();
-    assert.that(cache.delete(cache.read()[1].index)).is.true();
-    assert.that(cache.delete(cache.read()[2].index)).is.true();
+  test('cache.delete returns true when delete is granted.', function (done) {
+    const timestampid = cache.set('INSERT', 'foo', 'bar');
+    assert.that(cache.delete(timestampid)).is.true();
     done();
   });
 
