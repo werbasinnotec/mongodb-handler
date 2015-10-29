@@ -28,8 +28,8 @@ suite('cache ', function () {
   });
 
   test('cache.set returns a index when insert is granted and Operation is in cache', function (done) {
-    assert.that(cache.set('INSERT', 'foo', 'bar')).is.greaterThan(0);
-    assert.that(cache.read()[0].options).is.ofType('object');
+    assert.that(cache.set('INSERT', 'foo', 'bar')).is.not.null();
+    assert.that(cache.read()[0]).is.ofType('object');
     done();
   });
 

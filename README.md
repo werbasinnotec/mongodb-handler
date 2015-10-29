@@ -1,6 +1,6 @@
 # NPM Module mongodb-handler
 
-This module handles all mongodb-transactions over a global calling. As secondary the module caches all data change operations and removes the operation only from cache when the execution is done.
+This module handles all mongodb-transactions over a global calling.
 
 ### Installation
 
@@ -11,9 +11,9 @@ This module handles all mongodb-transactions over a global calling. As secondary
 The following commands are present:
 
 ```javascript
-const mdb-handler = require('mongodb-handler');
+const mdbhandler = require('mongodb-handler');
 
-mdb-handler(method, options, config);
+mdbhandler(method, options, config);
 ```
 
 ## Variable Declaration
@@ -29,11 +29,12 @@ Set the method of the transaction. Following methods are available:
 const options = { coll: 'test', obj: { foo: 'bar' } }
 const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
 
-mdb-handler('DELETE', options, config, function (err, cb) {
+mdbhandler('DELETE', options, config, function (err, cb) {
     if (err) {
         throw err
     }
     // Implementate your code...
+    console.log(cb);
 });
 ```
 This method will delete all object with 'foo' / 'bar' in collection 'test'.
@@ -46,11 +47,12 @@ When your mongodb have no authentication, the parameters dbuser and dbpassword c
 const options = { coll: 'test', obj: { foo: 'bar' } }
 const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
 
-mdb-handler('INSERT', options, config, function (err, cb) {
+mdbhandler('INSERT', options, config, function (err, cb) {
     if (err) {
         throw err
     }
     // Implementate your code...
+    console.log(cb);
 });
 ```
 This method will insert a object with 'foo' / 'bar' in collection 'test'
@@ -63,11 +65,12 @@ When your mongodb have no authentication, the parameters dbuser and dbpassword c
 const options = { coll: 'test', obj: { foo: 'bar' } }
 const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
 
-mdb-handler('FETCH', options, config, function (err, cb) {
+mdbhandler('FETCH', options, config, function (err, cb) {
     if (err) {
         throw err
     }
     // Implementate your code...
+    console.log(cb);
 });
 ```
 This method will fetch a object with 'foo' / 'bar' in collection 'test'
@@ -77,28 +80,30 @@ This method will fetch a object with 'foo' / 'bar' in collection 'test'
 ###### UPDATE
 ======
 ```javascript
-const options = { coll: 'test', criteria: 'crit', obj: { foo: 'bar' }}
+const options = { coll: 'test', criteria: { foo: 'bla' }, obj: { foo: 'bar' }}
 const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
 
-mdb-handler('UPDATE', options, config, function (err, cb) {
+mdbhandler('UPDATE', options, config, function (err, cb) {
     if (err) {
         throw err
     }
     // Implementate your code...
+    console.log(cb);
 });
 ```
 
 ###### ADDUSER
 ======
 ```javascript
-const options = { coll: 'test', criteria: 'crit', update: 'upd' }
-const config = { admindbuser: 'admin',  admindbpassword: 'password', dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
+const options = { newdbuser: 'frank', newdbpassword: 'sinatra', newdbname: 'musical' }
+const config = { admindbuser: 'admin',  admindbpassword: 'password', dbhost: '199.9.9.9', dbport: 27021 };
 
-mdb-handler('ADDUSER', options, config, function (err, cb) {
+mdbhandler('ADDUSER', options, config, function (err, cb) {
     if (err) {
         throw err
     }
     // Implementate your code...
+    console.log(cb);
 });
 ```
 
@@ -109,19 +114,22 @@ When your mongodb have no authentication, the parameters dbuser and dbpassword c
 
 The errorcallback can response follow objects:
 ```
-// When the database-connection is in timeout
+// When the database-connection is not successful
 {
-err: 'timeout'
+err: 'Error on connection'
 }
-// When the execution is not successful
+// When the operation is not successful
 {
-err: 'ErrorOnExecution'
+err: 'Error on operation'
 }
 ```
+
+The details of the error you can see it on the log into the console.
+
 ## License
 
 The MIT License (MIT)
-Copyright (c) 2014-2015 Werbasinnotec.
+Copyright (c) 2015 Werbasinnotec.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

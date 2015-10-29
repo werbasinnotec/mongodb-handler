@@ -30,6 +30,18 @@ suite('Test function mongodb-handler ', function () {
     done();
   });
 
+  test('mongodb-handler callback true when adduser is granted', function (done) {
+    const options = { newdbuser: 'frank', newdbpassword: 'sinatra', newdbname: 'musicals' };
+    const config = { dbhost: '127.0.0.1', dbport: 27017 };
+    this.timeout(6 * 1000);
+
+    mdbhandler('ADDUSER', options, config, function (err, cb) {
+      assert.that(err).is.equalTo(null);
+      assert.that(cb).is.true();
+      done();
+    });
+  });
+
   test('mongodb-handler callback true when insert is granted', function (done) {
     this.timeout(6 * 1000);
 
@@ -46,7 +58,6 @@ suite('Test function mongodb-handler ', function () {
     mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
       assert.that(err).is.equalTo(null);
       assert.that(cb).is.true();
-      done();
     });
 
     mdbhandler('UPDATE', { coll: 'test', criteria: { foo: 'bar' }, obj: { foo: 'large' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
@@ -62,7 +73,6 @@ suite('Test function mongodb-handler ', function () {
     mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
       assert.that(err).is.equalTo(null);
       assert.that(cb).is.true();
-      done();
     });
 
     mdbhandler('DELETE', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
@@ -78,7 +88,6 @@ suite('Test function mongodb-handler ', function () {
     mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
       assert.that(err).is.equalTo(null);
       assert.that(cb).is.true();
-      done();
     });
 
     mdbhandler('FETCH', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {

@@ -13,21 +13,22 @@ suite('execUpdateinDB ', function () {
   test('throws an error when index is not set.', function (done) {
     assert.that(function () {
       execUpdateinDB();
-    }).is.throwing('execUpdateinDB - stampid is not set!');
+    }).is.throwing('execUpdateinDB - index is not set!');
     done();
   });
 
   suite('Test Database operations', function () {
-    test('callback a timeout when Database is not reachable', function (done) {
+    test('callback a error when Database is not reachable', function (done) {
       this.timeout(6 * 1000);
 
       // Set Test-Options
-      const options = { coll: 'test', criteria: { foo: 'bla' }, obj: { foo: 'bar' }};
+      const options = { coll: 'test', obj: { foo: 'bar' }};
       const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
-      const stampid = cache.set('UPDATE', options, config);
+      const opid = cache.set('DELETE', options, config);
 
-      execUpdateinDB(stampid, function (err) {
-        assert.that(err.err).is.equalTo('timeout');
+      execUpdateinDB(opid, function (err, res) {
+        assert.that(err.err).is.equalTo('Error on connection');
+        assert.that(res).is.false();
         done();
       });
     });
@@ -38,10 +39,11 @@ suite('execUpdateinDB ', function () {
       // Set Test-Options
       const options = 'FOOBAR';
       const config = { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
-      const stampid = cache.set('UPDATE', options, config);
+      const opid = cache.set('UPDATE', options, config);
 
-      execUpdateinDB(stampid, function (err) {
-        assert.that(err.err).is.equalTo('ErrorOnExecution');
+      execUpdateinDB(opid, function (err, res) {
+        assert.that(err.err).is.equalTo('Error on operation');
+        assert.that(res).is.false();
         done();
       });
     });
@@ -52,9 +54,9 @@ suite('execUpdateinDB ', function () {
       // Set Test-Options
       const options = { coll: 'test', criteria: { foo: 'bla' }, obj: { foo: 'bar' }};
       const config = { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
-      const stampid = cache.set('UPDATE', options, config);
+      const opid = cache.set('UPDATE', options, config);
 
-      execUpdateinDB(stampid, function (err, cb) {
+      execUpdateinDB(opid, function (err, cb) {
         assert.that(err).is.equalTo(null);
         assert.that(cb).is.true();
         done();
