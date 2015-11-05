@@ -38,7 +38,7 @@ suite('execUpdateinDB ', function () {
 
       // Set Test-Options
       const options = 'FOOBAR';
-      const config = { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
+      const config = { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
       const opid = cache.set('UPDATE', options, config);
 
       execUpdateinDB(opid, function (err, res) {
@@ -53,7 +53,7 @@ suite('execUpdateinDB ', function () {
 
       // Set Test-Options
       const options = { coll: 'test', criteria: { foo: 'bla' }, obj: { foo: 'bar' }};
-      const config = { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
+      const config = { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
       const opid = cache.set('UPDATE', options, config);
 
       execUpdateinDB(opid, function (err, cb) {
