@@ -38,7 +38,7 @@ suite('execDeleteinDB ', function () {
 
       // Set Test-Options
       const options = 'FOOBAR';
-      const config = { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
+      const config = { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' };
       const opid = cache.set('DELETE', options, config);
 
       execDeleteinDB(opid, function (err, res) {
@@ -53,7 +53,7 @@ suite('execDeleteinDB ', function () {
 
       // Set Test-Options
       const options = { coll: 'test', obj: { foo: 'bar' }};
-      const config = { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
+      const config = { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' };
       const opid = cache.set('DELETE', options, config);
 
       execDeleteinDB(opid, function (err, cb) {

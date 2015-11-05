@@ -68,17 +68,19 @@ suite('Test function mongodb-handler ', function () {
   test('mongodb-handler callback true when insert is granted', function (done) {
     this.timeout(6 * 1000);
 
-    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
-      assert.that(err).is.equalTo(null);
-      assert.that(cb).is.true();
-      done();
-    });
+    setTimeout(function () {
+      mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
+        assert.that(err).is.equalTo(null);
+        assert.that(cb).is.true();
+        done();
+      });
+    }, 5000);
   });
 
   test('mongodb-handler callback true when update is granted', function (done) {
     this.timeout(6 * 1000);
 
-    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
       assert.that(err).is.equalTo(null);
       assert.that(cb).is.true();
     });
@@ -93,7 +95,7 @@ suite('Test function mongodb-handler ', function () {
   test('mongodb-handler callback true when delete is granted', function (done) {
     this.timeout(6 * 1000);
 
-    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
       assert.that(err).is.equalTo(null);
       assert.that(cb).is.true();
     });
@@ -108,12 +110,12 @@ suite('Test function mongodb-handler ', function () {
   test('mongodb-handler callback a object when fetch is granted', function (done) {
     this.timeout(6 * 1000);
 
-    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
       assert.that(err).is.equalTo(null);
       assert.that(cb).is.true();
     });
 
-    mdbhandler('FETCH', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'admin', dbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
+    mdbhandler('FETCH', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
       assert.that(err).is.equalTo(null);
       assert.that(cb).is.ofType('object');
       done();
