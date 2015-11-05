@@ -33,6 +33,7 @@ suite('Test function mongodb-handler ', function () {
   test('mongodb-handler callback true when adduser is granted', function (done) {
     const options = { newdbuser: 'frank', newdbpassword: 'sinatra', newdbname: 'musicals' };
     const config = { dbhost: '127.0.0.1', dbport: 27017 };
+
     this.timeout(6 * 1000);
 
     mdbhandler('ADDUSER', options, config, function (err, cb) {
