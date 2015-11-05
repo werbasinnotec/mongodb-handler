@@ -44,7 +44,7 @@ suite('Test function mongodb-handler ', function () {
       }
 
       // Add a user to the database
-      ndb.addUser('test', '1234');
+      ndb.addUser('admin', '1234');
       ndb.close();
     });
     done();
@@ -52,7 +52,7 @@ suite('Test function mongodb-handler ', function () {
 
   test('mongodb-handler callback true when adduser is granted', function (done) {
     const options = { newdbuser: 'frank', newdbpassword: 'sinatra', newdbname: 'musicals' };
-    const config = { admindbuser: 'test', admindbpassword: '1234', dbhost: 'localhost', dbport: 27017 };
+    const config = { admindbuser: 'admin', admindbpassword: '1234', dbhost: 'localhost', dbport: 27017 };
 
     this.timeout(6 * 1000);
 
