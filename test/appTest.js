@@ -69,7 +69,7 @@ suite('Test function mongodb-handler ', function () {
     this.timeout(6 * 1000);
 
     setTimeout(function () {
-      mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
+      mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
         assert.that(err).is.equalTo(null);
         assert.that(cb).is.true();
         done();
@@ -80,7 +80,7 @@ suite('Test function mongodb-handler ', function () {
   test('mongodb-handler callback true when update is granted', function (done) {
     this.timeout(6 * 1000);
 
-    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
+    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' }, function (err, cb) {
       assert.that(err).is.equalTo(null);
       assert.that(cb).is.true();
     });
