@@ -23,7 +23,7 @@ suite('execAdduserinDB ', function () {
 
       // Set Test-Options
       const options = { coll: 'test', obj: { foo: 'bar' }};
-      const config = { admindbuser: 'admin', admindbpassword: '1234', dbhost: '199.99.99', dbport: 27021 };
+      const config = { admindbuser: 'test', admindbpassword: '1234', dbhost: '199.99.99', dbport: 27021 };
       const opid = cache.set('ADDUSER', options, config);
 
       execAdduserinDB(opid, function (err, res) {
@@ -38,7 +38,7 @@ suite('execAdduserinDB ', function () {
 
       // Set Test-Options
       const options = { newdbpassword: 'sinatra' };
-      const config = { admindbuser: 'admin', admindbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017 };
+      const config = { admindbuser: 'test', admindbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017 };
       const opid = cache.set('ADDUSER', options, config);
 
       execAdduserinDB(opid, function (err, res) {
@@ -53,7 +53,7 @@ suite('execAdduserinDB ', function () {
 
       // Set Test-Options
       const options = { newdbuser: 'franky', newdbpassword: 'sinatray', newdbname: 'musicals' };
-      const config = { admindbuser: 'admin', admindbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017 };
+      const config = { admindbuser: 'test', admindbpassword: '1234', dbhost: '127.0.0.1', dbport: 27017 };
       const opid = cache.set('ADDUSER', options, config);
 
       execAdduserinDB(opid, function (err, cb) {

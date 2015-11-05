@@ -23,7 +23,7 @@ suite('execInsertinDB ', function () {
 
       // Set Test-Options
       const options = { coll: 'test', obj: { foo: 'bar' }};
-      const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
+      const config = { dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
       const opid = cache.set('INSERT', options, config);
 
       execInsertinDB(opid, function (err, res) {
@@ -38,7 +38,7 @@ suite('execInsertinDB ', function () {
 
       // Set Test-Options
       const options = 'FOOBAR';
-      const config = { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' };
+      const config = { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
       const opid = cache.set('INSERT', options, config);
 
       execInsertinDB(opid, function (err, res) {
@@ -53,7 +53,7 @@ suite('execInsertinDB ', function () {
 
       // Set Test-Options
       const options = { coll: 'test', obj: { foo: 'bar' }};
-      const config = { dbuser: 'frank', dbpassword: 'sinatra', dbhost: '127.0.0.1', dbport: 27017, dbname: 'musicals' };
+      const config = { dbhost: '127.0.0.1', dbport: 27017, dbname: 'admin' };
       const opid = cache.set('INSERT', options, config);
 
       execInsertinDB(opid, function (err, cb) {
