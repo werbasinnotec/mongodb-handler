@@ -2,7 +2,7 @@ machine:
   timezone: Europe/Berlin
 
   node:
-    version: 4.0.0
+    version: 5.0.0
 
 dependencies:
   cache_directories:
