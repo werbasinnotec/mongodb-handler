@@ -27,7 +27,7 @@ suite('execAdduserinDB ', function () {
       const opid = cache.set('ADDUSER', options, config);
 
       execAdduserinDB(opid, function (err, res) {
-        assert.that(err.err).is.equalTo('Error on connection');
+        assert.that(err).is.not.null();
         assert.that(res).is.false();
         done();
       });
@@ -42,7 +42,7 @@ suite('execAdduserinDB ', function () {
       const opid = cache.set('ADDUSER', options, config);
 
       execAdduserinDB(opid, function (err, res) {
-        assert.that(err.err).is.equalTo('Error on operation');
+        assert.that(err).is.not.null();
         assert.that(res).is.false();
         done();
       });

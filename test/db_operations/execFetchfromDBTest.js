@@ -27,7 +27,7 @@ suite('execFetchfromDB ', function () {
       const opid = cache.set('FETCH', options, config);
 
       execFetchfromDB(opid, function (err, res) {
-        assert.that(err.err).is.equalTo('Error on connection');
+        assert.that(err).is.not.null();
         assert.that(res).is.false();
         done();
       });
@@ -42,7 +42,7 @@ suite('execFetchfromDB ', function () {
       const opid = cache.set('FETCH', options, config);
 
       execFetchfromDB(opid, function (err, res) {
-        assert.that(err.err).is.equalTo('Error on operation');
+        assert.that(err).is.not.null();
         assert.that(res).is.false();
         done();
       });

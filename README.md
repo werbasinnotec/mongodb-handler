@@ -110,21 +110,6 @@ mdbhandler('ADDUSER', options, config, function (err, cb) {
 This method will update all objects with named critera in collection 'coll'.
 When your mongodb have no authentication, the parameters dbuser and dbpassword can removed.
 
-### Callback Error:
-
-The errorcallback can response follow objects:
-```
-// When the database-connection is not successful
-{
-err: 'Error on connection'
-}
-// When the operation is not successful
-{
-err: 'Error on operation'
-}
-```
-
-The details of the error you can see it on the log into the console.
 
 ## License
 
