@@ -53,7 +53,7 @@ suite('execAdduserinDB ', function () {
 
       // Set Test-Options
       const options = { newdbuser: 'franky', newdbpassword: 'sinatray', newdbname: 'musicals' };
-      const config = { admindbuser: 'test', admindbpassword: '1234', dbhost: 'localhost', dbport: 27017 };
+      const config = { admindbuser: 'admin', admindbpassword: '1234', dbhost: 'localhost', dbport: 27017 };
       const opid = cache.set('ADDUSER', options, config);
 
       execAdduserinDB(opid, function (err, cb) {
