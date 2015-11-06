@@ -24,8 +24,5 @@ test:
     - grunt mocha_istanbul
     - grunt > coverage/grunt-result.txt
 
-test:
-  override:
-    - grunt mocha_istanbul
-    - grunt > coverage/grunt-result.txt
+
 
