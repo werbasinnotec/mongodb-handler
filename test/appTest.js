@@ -1,131 +1,192 @@
 'use strict';
 
 const assert = require('assertthat');
-const mdbhandler = require('../lib/app.js');
-const Db = require('mongodb').Db;
-const Server = require('mongodb').Server;
+const app = require('../lib/app.js');
 
-suite('Test function mongodb-handler ', function () {
-  test('mongodb-handler is a function.', function (done) {
-    assert.that(mdbhandler).is.ofType('function');
+describe('Mongodbhandler...', () => {
+  it('... insert is a function', (done) => {
+    assert.that(app.insert).is.ofType('function');
     done();
   });
 
-  test('mongodb-handler throws an error when method is not defined', function (done) {
-    assert.that(function () {
-      mdbhandler();
-    }).is.throwing('method is not defined');
+  it('... delete is a function', (done) => {
+    assert.that(app.delete).is.ofType('function');
     done();
   });
 
-  test('mongodb-handler throws an error when options is not defined', function (done) {
-    assert.that(function () {
-      mdbhandler('INSERT');
-    }).is.throwing('options is not defined');
+  it('... update is a function', (done) => {
+    assert.that(app.update).is.ofType('function');
     done();
   });
 
-  test('mongodb-handler throws an error when config is not defined', function (done) {
-    assert.that(function () {
-      mdbhandler('INSERT', { foo: 'bar' });
-    }).is.throwing('config is not defined');
+  it('... findandupdate is a function', (done) => {
+    assert.that(app.findandupdate).is.ofType('function');
     done();
   });
 
-  test('Add Admin-User to resolve all tests', function (done) {
-    const db = new Db('admin', new Server('localhost', 27017));
+  it('... fetch is a function', (done) => {
+    assert.that(app.fetch).is.ofType('function');
+    done();
+  });
 
-    this.timeout(6 * 1000);
-
-    // Establish connection to db
-    db.open(function (err, ndb) {
-      if (err) {
-        throw err;
-      }
-
-      // Add a user to the database
-      ndb.addUser('admin', '1234');
-      ndb.close();
+  describe('... callbacks an error...', () => {
+    it('... when no config is defined', (done) => {
+      app.insert(undefined, undefined, (err) => {
+        if (err) {
+          assert.that(err).is.equalTo('options or config not defined');
+          done();
+        }
+      });
     });
-    done();
+
+    it('... when no options is defined', (done) => {
+      app.insert({}, undefined, (err) => {
+        if (err) {
+          assert.that(err).is.equalTo('options or config not defined');
+          done();
+        }
+      });
+    });
+
+    it('... when dbhost in config is not defined', (done) => {
+      app.insert({}, {}, (err) => {
+        if (err) {
+          assert.that(err).is.equalTo('dbhost is required in config');
+          done();
+        }
+      });
+    });
+
+    it('... when dbport in config is not defined', (done) => {
+      app.insert({ dbhost: '127.0.0.1' }, {}, (err) => {
+        if (err) {
+          assert.that(err).is.equalTo('dbport is missing or in error');
+          done();
+        }
+      });
+    });
+
+    it('... when dbport in config is not in correct format', (done) => {
+      app.insert({ dbhost: '127.0.0.1', dbport: 'foo' }, {}, (err) => {
+        if (err) {
+          assert.that(err).is.equalTo('dbport is missing or in error');
+          done();
+        }
+      });
+    });
+
+    it('... when dbname in config is not defined', (done) => {
+      app.insert({ dbhost: '127.0.0.1', dbport: 27017 }, {}, (err) => {
+        if (err) {
+          assert.that(err).is.equalTo('dbname is required in config');
+          done();
+        }
+      });
+    });
+
+    it('... when collection in options is not defined', (done) => {
+      app.insert({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { }, (err) => {
+        if (err) {
+          assert.that(err).is.equalTo('collection is required in options');
+          done();
+        }
+      });
+    });
+
+    it('... when document in options is not defined', (done) => {
+      app.insert({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest' }, (err) => {
+        if (err) {
+          assert.that(err).is.equalTo('doc is required in options or in error');
+          done();
+        }
+      });
+    });
   });
 
-  test('mongodb-handler callback true when adduser is granted', function (done) {
-    const options = { newdbuser: 'frank', newdbpassword: 'sinatra', newdbname: 'musicals' };
-    const config = { admindbuser: 'admin', admindbpassword: '1234', dbhost: 'localhost', dbport: 27017 };
+  describe('... callbacks results ...', () => {
+    it('... when a document is insert', (done) => {
+      app.insert({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: { foo: 'bar' }}, (err, result) => {
+        if (err) {
+          throw err;
+        }
 
-    this.timeout(6 * 1000);
-
-    setTimeout(function () {
-      mdbhandler('ADDUSER', options, config, function (err, cb) {
-        assert.that(err).is.equalTo(null);
-        assert.that(cb).is.true();
+        assert.that(result.result.ok).is.equalTo(1);
         done();
       });
-    }, 5000);
-  });
+    });
 
-  test('mongodb-handler callback true when insert is granted', function (done) {
-    this.timeout(6 * 1000);
+    it('... when a document fetched', (done) => {
+      app.fetch({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: { foo: 'bar' }}, (err, result) => {
+        if (err) {
+          throw err;
+        }
 
-    setTimeout(function () {
-      mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: 'localhost', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
-        assert.that(err).is.equalTo(null);
-        assert.that(cb).is.true();
+        assert.that(result[0].foo).is.equalTo('bar');
         done();
       });
-    }, 5000);
-  });
-
-  test('mongodb-handler callback true when update is granted', function (done) {
-    this.timeout(6 * 1000);
-
-    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: 'localhost', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
-      assert.that(err).is.equalTo(null);
-      assert.that(cb).is.true();
     });
 
-    mdbhandler('UPDATE', { coll: 'test', criteria: { foo: 'bar' }, obj: { foo: 'large' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: 'localhost', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
-      assert.that(err).is.equalTo(null);
-      assert.that(cb).is.true();
-      done();
-    });
-  });
+    it('... when a document updated', (done) => {
+      app.update({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', update: { foo: 'bar' }, doc: { foo: 'newbar' }}, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
 
-  test('mongodb-handler callback true when delete is granted', function (done) {
-    this.timeout(6 * 1000);
+      app.fetch({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: {}}, (err, result) => {
+        if (err) {
+          throw err;
+        }
 
-    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: 'localhost', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
-      assert.that(err).is.equalTo(null);
-      assert.that(cb).is.true();
-    });
-
-    mdbhandler('DELETE', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: 'localhost', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
-      assert.that(err).is.equalTo(null);
-      assert.that(cb).is.true();
-      done();
-    });
-  });
-
-  test('mongodb-handler callback a object when fetch is granted', function (done) {
-    this.timeout(6 * 1000);
-
-    mdbhandler('INSERT', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: 'localhost', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
-      assert.that(err).is.equalTo(null);
-      assert.that(cb).is.true();
+        assert.that(result[0].foo).is.equalTo('newbar');
+        done();
+      });
     });
 
-    mdbhandler('FETCH', { coll: 'test', obj: { foo: 'bar' }}, { dbuser: 'frank', dbpassword: 'sinatra', dbhost: 'localhost', dbport: 27017, dbname: 'musicals' }, function (err, cb) {
-      assert.that(err).is.equalTo(null);
-      assert.that(cb).is.ofType('object');
-      done();
-    });
-  });
+    it('... when a document is delete', (done) => {
+      app.delete({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: { foo: 'newbar' }}, (err, result) => {
+        if (err) {
+          throw err;
+        }
 
-  test('mongodb-handler throws an error when method is not avaiable', function (done) {
-    assert.that(function () {
-      mdbhandler('NOT', { foo: 'bar' }, { dbhost: 'test', dbport: 123, dbuser: 'foo', dbname: 'bar', dbpassword: '123' });
-    }).is.throwing('Unknow method to switch');
-    done();
+        assert.that(result.result.ok).is.equalTo(1);
+        done();
+      });
+    });
+
+    it('... when a document multi-updated', (done) => {
+      app.insert({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: { foo: 'bar1' }}, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+
+      app.insert({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: { foo: 'bar1' }}, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+
+      app.insert({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: { foo: 'bar1' }}, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+
+      app.findandupdate({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', update: { foo: 'bar1' }, doc: { foo: 'multinewbar' }}, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+
+      app.fetch({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: {}}, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        assert.that(result[0].foo).is.equalTo('multinewbar');
+        done();
+      });
+    });
   });
 });

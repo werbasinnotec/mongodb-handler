@@ -1,6 +1,6 @@
 {
   "name": "mongodb-handler",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "easy NPM Modul to handle all important mongodb operations as global",
   "contributors": [
     {
@@ -14,10 +14,8 @@
   ],
   "main": "lib/app.js",
   "dependencies": {
-    "log": "1.4.0",
     "mongodb": "2.0.48",
-    "node-cache": "3.0.0",
-    "node-uuid": "1.4.7"
+    "validate": "3.0.1"
   },
   "repository": {
     "type": "git",
@@ -30,7 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "assertthat": "0.6.0",
-    "grunt": "0.4.5",
-    "tourism": "0.21.0"
+    "gulp": "3.9.0",
+    "roboter": "0.4.6"
   }
 }

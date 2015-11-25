@@ -1,0 +1,16 @@
+{
+  "collection": {
+    "type": "string",
+    "required": true,
+    "message": "collection is required in options"
+  },
+  "update": {
+    "type": "object",
+    "required": false
+  },
+  "doc": {
+    "type": "object",
+    "required": true,
+    "message": "doc is required in options or in error"
+  }
+}

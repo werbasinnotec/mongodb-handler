@@ -1,0 +1,14 @@
+'use strict';
+
+var app = require('./lib/app.js');
+
+var config = { dbhost: '127.0.0.1', dbport: 27017, dbname: 'asd' };
+var option = { collection: 'foo', update: { test: 'Das ist ein nochmal geupdateter Test', test2: 'test2' }, doc: { test: 'Das ist ein nochmal dritter geupdateter Test', test2: 'test2' }};
+
+app.findandupdate(config, option, (err, result) => {
+  if (err) {
+    throw new Error(err);
+  }
+
+  console.log(result);
+});

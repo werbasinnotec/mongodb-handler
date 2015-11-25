@@ -2,7 +2,7 @@ machine:
   timezone: Europe/Berlin
 
   node:
-    version: 4.0.0
+    version: 5.1.0
 
 dependencies:
   cache_directories:
@@ -13,7 +13,8 @@ dependencies:
     - sudo /etc/init.d/mongodb stop
     - sudo cp mongodb-linux-x86_64-2.6.4/bin/* /usr/bin
     - sudo /etc/init.d/mongodb start
-    - npm install -g grunt-cli
+    - npm install -g roboter
+    - npm install -g istanbul
 
 general:
   artifacts:
@@ -21,7 +22,4 @@ general:
 
 test:
   override:
-    - grunt mocha_istanbul
-
-
-
+    - istanbul cover _mocha

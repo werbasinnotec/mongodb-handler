@@ -12,105 +12,81 @@ The following commands are present:
 
 ```javascript
 const mdbhandler = require('mongodb-handler');
-
-mdbhandler(method, options, config);
 ```
+### Config (object)
+-   dbhost: Defines the host where the mongodb is reachable (must defined)
+-   dbport: Defines the port where the mongodb is reachable (must defined)
+-   dbname: Defines the name of mongodb (must defined)
+-   dbuser: Defines the user of mongodb. (When is undefined, no user is used)
+-   dbpassword: Defines the password from the user (must defined when dbuser is used)
+-   extensions: All Extensions from connectionstring as String. Example: /?connectTimeoutMS=5000 (this is default)
 
-## Variable Declaration
+### Options (object)
+-   collection: Defines the collection
+-   update: Defines the document on update
+-   doc: Defines the document
 
-####  method:
+### Usage
 
-Set the method of the transaction. Following methods are available:
+#### Insert a document:
 
-###### DELETE
-=====
-
-```javascript
-const options = { coll: 'test', obj: { foo: 'bar' } }
-const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
-
-mdbhandler('DELETE', options, config, function (err, cb) {
+```javscript
+mdbhandler.insert(config, options, (err, result) => {
     if (err) {
-        throw err
+        throw err;
     }
-    // Implementate your code...
-    console.log(cb);
-});
-```
-This method will delete all object with 'foo' / 'bar' in collection 'test'.
-
-When your mongodb have no authentication, the parameters dbuser and dbpassword can removed.
-
-###### INSERT
-=====
-```javascript
-const options = { coll: 'test', obj: { foo: 'bar' } }
-const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
-
-mdbhandler('INSERT', options, config, function (err, cb) {
-    if (err) {
-        throw err
-    }
-    // Implementate your code...
-    console.log(cb);
-});
-```
-This method will insert a object with 'foo' / 'bar' in collection 'test'
-
-When your mongodb have no authentication, the parameters dbuser and dbpassword can removed.
-
-###### FETCH
-=====
-```javascript
-const options = { coll: 'test', obj: { foo: 'bar' } }
-const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
-
-mdbhandler('FETCH', options, config, function (err, cb) {
-    if (err) {
-        throw err
-    }
-    // Implementate your code...
-    console.log(cb);
-});
-```
-This method will fetch a object with 'foo' / 'bar' in collection 'test'
-
-
-
-###### UPDATE
-======
-```javascript
-const options = { coll: 'test', criteria: { foo: 'bla' }, obj: { foo: 'bar' }}
-const config = { dbuser: 'test', dbpassword: '123', dbhost: '199.9.9.9', dbport: 27021, dbname: 'admin' };
-
-mdbhandler('UPDATE', options, config, function (err, cb) {
-    if (err) {
-        throw err
-    }
-    // Implementate your code...
-    console.log(cb);
+    // Implementate your code here
+    console.log(result);
 });
 ```
 
-###### ADDUSER
-======
-```javascript
-const options = { newdbuser: 'frank', newdbpassword: 'sinatra', newdbname: 'musical' }
-const config = { admindbuser: 'admin',  admindbpassword: 'password', dbhost: '199.9.9.9', dbport: 27021 };
+#### Update a single document:
 
-mdbhandler('ADDUSER', options, config, function (err, cb) {
+```javscript
+mdbhandler.update(config, options, (err, result) => {
     if (err) {
-        throw err
+        throw err;
     }
-    // Implementate your code...
-    console.log(cb);
+    // Implementate your code here
+    console.log(result);
 });
 ```
 
-This method will update all objects with named critera in collection 'coll'.
-When your mongodb have no authentication, the parameters dbuser and dbpassword can removed.
+#### Multiupdate document:
 
+```javscript
+mdbhandler.findandupdate(config, options, (err, result) => {
+    if (err) {
+        throw err;
+    }
+    // Implementate your code here
+    console.log(result);
+});
+```
 
+#### Delete a document:
+
+```javscript
+mdbhandler.delete(config, options, (err, result) => {
+    if (err) {
+        throw err;
+    }
+    // Implementate your code here
+    console.log(result);
+});
+```
+
+#### Fetch documents:
+
+```javscript
+mdbhandler.fetch(config, options, (err, result) => {
+    if (err) {
+        throw err;
+    }
+    // Implementate your code here
+    console.log(result);
+});
+```
 ## License
 
 The MIT License (MIT)
