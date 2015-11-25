@@ -22,4 +22,5 @@ general:
 
 test:
   override:
+    - bot analyse
     - istanbul cover _mocha
