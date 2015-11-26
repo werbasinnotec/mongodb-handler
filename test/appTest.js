@@ -104,6 +104,18 @@ describe('Mongodbhandler...', () => {
   });
 
   describe('... callbacks results ...', () => {
+    /* eslint-disable no-unused-vars */
+    let flag = false;
+
+    beforeEach((done) => {
+      setTimeout(() => {
+        flag = true;
+
+        done();
+      }, 1500);
+    });
+    /* eslint-enable no-unused-vars */
+
     it('... when a document is insert', (done) => {
       app.insert({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: { foo: 'bar' }}, (err, result) => {
         if (err) {
