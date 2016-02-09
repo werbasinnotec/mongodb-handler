@@ -14,7 +14,7 @@
   ],
   "main": "lib/app.js",
   "dependencies": {
-    "mongodb": "2.0.48",
+    "mongodb": "2.1.6",
     "validate": "3.0.1"
   },
   "repository": {
@@ -28,7 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "assertthat": "0.6.0",
-    "gulp": "3.9.0",
-    "roboter": "0.4.6"
+    "gulp": "3.9.1",
+    "roboter": "0.4.8"
   }
 }

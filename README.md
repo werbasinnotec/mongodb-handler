@@ -19,7 +19,7 @@ const mdbhandler = require('mongodb-handler');
 -   dbname: Defines the name of mongodb (must defined)
 -   dbuser: Defines the user of mongodb. (When is undefined, no user is used)
 -   dbpassword: Defines the password from the user (must defined when dbuser is used)
--   extensions: All Extensions from connectionstring as String. Example: /?connectTimeoutMS=5000 (this is default)
+-   extensions: All Extensions from connectionstring as String. Example: ?connectTimeoutMS=5000 (this is default)
 
 ### Options (object)
 -   collection: Defines the collection
