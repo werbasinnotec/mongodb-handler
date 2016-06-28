@@ -1,6 +1,6 @@
 {
   "name": "mongodb-handler",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "easy NPM Modul to handle all important mongodb operations as global",
   "contributors": [
     {
@@ -14,7 +14,7 @@
   ],
   "main": "lib/app.js",
   "dependencies": {
-    "mongodb": "2.1.6",
+    "mongodb": "2.1.18",
     "validate": "3.0.1"
   },
   "repository": {
@@ -27,8 +27,12 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "assertthat": "0.6.0",
+    "assertthat": "0.7.0",
     "gulp": "3.9.1",
-    "roboter": "0.4.8"
+    "gulp-batch": "1.0.5",
+    "gulp-eslint": "2.0.0",
+    "gulp-mocha": "2.2.0",
+    "gulp-shell": "0.5.2",
+    "gulp-watch": "^4.3.8"
   }
 }

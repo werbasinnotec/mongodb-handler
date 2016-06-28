@@ -143,15 +143,15 @@ describe('Mongodbhandler...', () => {
         if (err) {
           throw err;
         }
-      });
+        
+        app.fetch({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: {}}, (err, result) => {
+          if (err) {
+            throw err;
+          }
 
-      app.fetch({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: {}}, (err, result) => {
-        if (err) {
-          throw err;
-        }
-
-        assert.that(result[0].foo).is.equalTo('newbar');
-        done();
+          assert.that(result[0].foo).is.equalTo('newbar');
+          done();
+        });
       });
     });
 
