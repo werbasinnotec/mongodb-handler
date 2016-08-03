@@ -87,6 +87,21 @@ mdbhandler.fetch(config, options, (err, result) => {
     console.log(result);
 });
 ```
+
+#### Bulk insert documents:
+
+```javscript
+let options = { doc: [{obj1}, {obj2} ... ]};
+
+mdbhandler.bulk(config, options, (err, result) => {
+    if (err) {
+        throw err;
+    }
+    // Implementate your code here
+    console.log(result);
+});
+```
+
 ## License
 
 The MIT License (MIT)

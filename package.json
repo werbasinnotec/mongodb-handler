@@ -1,6 +1,6 @@
-{
+git{
   "name": "mongodb-handler",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "easy NPM Modul to handle all important mongodb operations as global",
   "contributors": [
     {

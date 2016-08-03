@@ -7,10 +7,5 @@
   "update": {
     "type": "object",
     "required": false
-  },
-  "doc": {
-    "type": "object",
-    "required": true,
-    "message": "doc is required in options or in error"
   }
 }

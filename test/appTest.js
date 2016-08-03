@@ -92,15 +92,6 @@ describe('Mongodbhandler...', () => {
         }
       });
     });
-
-    it('... when document in options is not defined', (done) => {
-      app.insert({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest' }, (err) => {
-        if (err) {
-          assert.that(err).is.equalTo('doc is required in options or in error');
-          done();
-        }
-      });
-    });
   });
 
   describe('... callbacks results ...', () => {
@@ -143,7 +134,7 @@ describe('Mongodbhandler...', () => {
         if (err) {
           throw err;
         }
-        
+
         app.fetch({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: {}}, (err, result) => {
           if (err) {
             throw err;
@@ -197,6 +188,23 @@ describe('Mongodbhandler...', () => {
         }
 
         assert.that(result[0].foo).is.equalTo('multinewbar');
+        done();
+      });
+    });
+
+    it('... when a bulk insert operation is running', (done) => {
+      const insertobj = [];
+
+      for (let i = 0; i < 20000; i++) {
+        insertobj.push({ counter: i, text: 'foo', value: 'bar' });
+      }
+
+      app.bulk({ dbhost: '127.0.0.1', dbport: 27017, dbname: 'unittest' }, { collection: 'unittest', doc: insertobj }, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        assert.that(result).is.ofType('object');
         done();
       });
     });
