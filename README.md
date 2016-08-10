@@ -17,7 +17,7 @@ const mdbhandler = require('mongodb-handler');
 To Startup in your Project you must start the mdb-service.
 
 ```javascript
-const mdbservice = require('mongodb-handler/lib/server');
+require('mongodb-handler/lib/server');
 ```
 
 ### Config ENV Variable

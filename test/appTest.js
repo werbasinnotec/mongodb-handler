@@ -3,6 +3,7 @@
 const assert = require('assertthat');
 const app = require('../lib/app.js');
 const server = require('../lib/server.js');
+const ObjectID = require('mongodb').ObjectID;
 
 describe('Mongodbhandler...', () => {
   it('... insert is a function', (done) => {
@@ -85,6 +86,25 @@ describe('Mongodbhandler...', () => {
       });
     });
 
+    it('... when a document fetched by objectid', (done) => {
+      app.insert({ collection: 'unittest', doc: { foo: 'bar' }}, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        assert.that(result.result.ok).is.equalTo(1);
+
+        app.fetch({ collection: 'unittest', doc: { _id: result.ops[0]._id }}, (err2, result2) => {
+          if (err2) {
+            throw err2;
+          }
+
+          assert.that(result2[0].foo).is.equalTo('bar');
+          done();
+        });
+      });
+    });
+
     it('... when a document updated', (done) => {
       app.update({ collection: 'unittest', update: { foo: 'bar' }, doc: { foo: 'newbar' }}, (err) => {
         if (err) {
@@ -114,19 +134,19 @@ describe('Mongodbhandler...', () => {
     });
 
     it('... when a document multi-updated', (done) => {
-      app.insert({ collection: 'unittest', doc: { foo: 'bar1' }}, (err) => {
+      app.insert({ collection: 'unittest', doc: { test:'multi', foo: 'bar1' }}, (err) => {
         if (err) {
           throw err;
         }
       });
 
-      app.insert({ collection: 'unittest', doc: { foo: 'bar1' }}, (err) => {
+      app.insert({ collection: 'unittest', doc: { test:'multi', foo: 'bar1' }}, (err) => {
         if (err) {
           throw err;
         }
       });
 
-      app.insert({ collection: 'unittest', doc: { foo: 'bar1' }}, (err) => {
+      app.insert({ collection: 'unittest', doc: { test:'multi', foo: 'bar1' }}, (err) => {
         if (err) {
           throw err;
         }
@@ -138,7 +158,7 @@ describe('Mongodbhandler...', () => {
         }
       });
 
-      app.fetch({ collection: 'unittest', doc: {}}, (err, result) => {
+      app.fetch({ collection: 'unittest', doc: { test: 'multi' }}, (err, result) => {
         if (err) {
           throw err;
         }
