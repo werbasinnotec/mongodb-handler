@@ -13,13 +13,16 @@ The following commands are present:
 ```javascript
 const mdbhandler = require('mongodb-handler');
 ```
-### Config (object)
--   dbhost: Defines the host where the mongodb is reachable (must defined)
--   dbport: Defines the port where the mongodb is reachable (must defined)
--   dbname: Defines the name of mongodb (must defined)
--   dbuser: Defines the user of mongodb. (When is undefined, no user is used)
--   dbpassword: Defines the password from the user (must defined when dbuser is used)
--   extensions: All Extensions from connectionstring as String. Example: ?connectTimeoutMS=5000 (this is default)
+
+To Startup in your Project you must start the mdb-service.
+
+```javascript
+const mdbservice = require('mongodb-handler/lib/server');
+```
+
+### Config ENV Variable
+- MDBHANDLER_CONSTRING: Defines the connectionstring to the database. Default is: 'mongodb://localhost:27017/mdbtest';
+- MDBHANDLER_PORT: Defines the port where the mongodbhandler is listen. Default is 4444;
 
 ### Options (object)
 -   collection: Defines the collection
