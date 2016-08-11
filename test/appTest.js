@@ -128,7 +128,7 @@ describe('Mongodbhandler...', () => {
           throw err;
         }
 
-        assert.that(result.ok).is.equalTo(1);
+        assert.that(result.result.ok).is.equalTo(1);
         done();
       });
     });

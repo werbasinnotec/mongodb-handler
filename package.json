@@ -1,6 +1,6 @@
 {
   "name": "mongodb-handler",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "easy NPM Modul to handle all important mongodb operations as global",
   "contributors": [
     {
