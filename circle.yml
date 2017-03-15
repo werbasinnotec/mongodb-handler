@@ -13,7 +13,6 @@ dependencies:
     - sudo /etc/init.d/mongodb stop
     - sudo cp mongodb-linux-x86_64-2.6.4/bin/* /usr/bin
     - sudo /etc/init.d/mongodb start
-    - npm install -g roboter
     - npm install -g istanbul
 
 general:
@@ -22,5 +21,4 @@ general:
 
 test:
   override:
-    - bot analyse
     - istanbul cover _mocha
