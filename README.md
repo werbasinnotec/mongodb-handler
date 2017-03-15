@@ -34,7 +34,7 @@ require('mongodb-handler/lib/server');
 #### Insert a document:
 
 ```javscript
-mdbhandler.insert(config, options, (err, result) => {
+mdbhandler.insert(options, (err, result) => {
     if (err) {
         throw err;
     }
@@ -46,7 +46,7 @@ mdbhandler.insert(config, options, (err, result) => {
 #### Update a single document:
 
 ```javscript
-mdbhandler.update(config, options, (err, result) => {
+mdbhandler.update(options, (err, result) => {
     if (err) {
         throw err;
     }
@@ -58,7 +58,7 @@ mdbhandler.update(config, options, (err, result) => {
 #### Multiupdate document:
 
 ```javscript
-mdbhandler.findandupdate(config, options, (err, result) => {
+mdbhandler.findandupdate(options, (err, result) => {
     if (err) {
         throw err;
     }
@@ -70,7 +70,7 @@ mdbhandler.findandupdate(config, options, (err, result) => {
 #### Delete a document:
 
 ```javscript
-mdbhandler.delete(config, options, (err, result) => {
+mdbhandler.delete(options, (err, result) => {
     if (err) {
         throw err;
     }
@@ -82,10 +82,26 @@ mdbhandler.delete(config, options, (err, result) => {
 #### Fetch documents:
 
 ```javscript
-mdbhandler.fetch(config, options, (err, result) => {
+mdbhandler.fetch(options, (err, result) => {
     if (err) {
         throw err;
     }
+    // Implementate your code here
+    console.log(result);
+});
+```
+
+#### Fetch last n documents:
+
+```javscript
+
+let options = { doc: { id = 'xyz' }, last: 10 };
+
+mdbhandler.fetchlastNdocuments(options, (err, result) => {
+    if (err) {
+        throw err;
+    }
+
     // Implementate your code here
     console.log(result);
 });
@@ -96,7 +112,7 @@ mdbhandler.fetch(config, options, (err, result) => {
 ```javscript
 let options = { doc: [{obj1}, {obj2} ... ]};
 
-mdbhandler.bulk(config, options, (err, result) => {
+mdbhandler.bulk(options, (err, result) => {
     if (err) {
         throw err;
     }

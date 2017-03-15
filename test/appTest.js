@@ -2,10 +2,16 @@
 
 const assert = require('assertthat');
 const app = require('../lib/app.js');
-const server = require('../lib/server.js');
-const ObjectID = require('mongodb').ObjectID;
 
 describe('Mongodbhandler...', () => {
+  before(() => {
+    require('./dropDatabase')((err) => {
+      if (err) {
+        throw err;
+      }
+    });
+  });
+
   it('... insert is a function', (done) => {
     assert.that(app.insert).is.ofType('function');
     done();
@@ -111,9 +117,9 @@ describe('Mongodbhandler...', () => {
           throw err;
         }
 
-        app.fetch({ collection: 'unittest', doc: {}}, (err, result) => {
-          if (err) {
-            throw err;
+        app.fetch({ collection: 'unittest', doc: {}}, (err2, result) => {
+          if (err2) {
+            throw err2;
           }
 
           assert.that(result[0].foo).is.equalTo('newbar');
@@ -134,37 +140,37 @@ describe('Mongodbhandler...', () => {
     });
 
     it('... when a document multi-updated', (done) => {
-      app.insert({ collection: 'unittest', doc: { test:'multi', foo: 'bar1' }}, (err) => {
-        if (err) {
-          throw err;
-        }
-      });
-
-      app.insert({ collection: 'unittest', doc: { test:'multi', foo: 'bar1' }}, (err) => {
-        if (err) {
-          throw err;
-        }
-      });
-
-      app.insert({ collection: 'unittest', doc: { test:'multi', foo: 'bar1' }}, (err) => {
-        if (err) {
-          throw err;
-        }
-      });
-
-      app.findandupdate({ collection: 'unittest', update: { foo: 'bar1' }, doc: { foo: 'multinewbar' }}, (err) => {
-        if (err) {
-          throw err;
-        }
-      });
-
-      app.fetch({ collection: 'unittest', doc: { test: 'multi' }}, (err, result) => {
+      app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar1' }}, (err) => {
         if (err) {
           throw err;
         }
 
-        assert.that(result[0].foo).is.equalTo('multinewbar');
-        done();
+        app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar1' }}, (err1) => {
+          if (err1) {
+            throw err1;
+          }
+
+          app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar1' }}, (err2) => {
+            if (err2) {
+              throw err2;
+            }
+
+            app.findandupdate({ collection: 'unittest', update: { foo: 'bar1' }, doc: { foo: 'multinewbar' }}, (err3) => {
+              if (err3) {
+                throw err3;
+              }
+
+              app.fetch({ collection: 'unittest', doc: { test: 'multi' }}, (err4, result) => {
+                if (err4) {
+                  throw err4;
+                }
+
+                assert.that(result[0].foo).is.equalTo('multinewbar');
+                done();
+              });
+            });
+          });
+        });
       });
     });
 
@@ -181,6 +187,19 @@ describe('Mongodbhandler...', () => {
         }
 
         assert.that(result).is.ofType('object');
+        done();
+      });
+    });
+
+    it('... when the last N documents are called', (done) => {
+      app.fetchlastNdocuments({ collection: 'unittest', doc: { text: 'foo' }, last: 3 }, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        assert.that(result[0].counter).is.equalTo(19999);
+        assert.that(result[1].counter).is.equalTo(19998);
+        assert.that(result[2].counter).is.equalTo(19997);
         done();
       });
     });
