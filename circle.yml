@@ -21,4 +21,4 @@ general:
 
 test:
   override:
-    - istanbul cover _mocha
+    - gulp test
