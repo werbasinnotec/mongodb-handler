@@ -4,20 +4,42 @@ This module handles all mongodb-transactions over a global calling.
 
 ### Installation
 
-        npm install mongodb-handler
+```
+npm install mongodb-handler
+```
 
 ### Implementate in your project:
 
-The following commands are present:
+The module have an integrated Eventlistener to fetch all events through this module.
+
+To Startup in your Project you must start the Eventlistener in your project.
 
 ```javascript
+'use strict';
+
 const mdbhandler = require('mongodb-handler');
-```
 
-To Startup in your Project you must start the mdb-service.
+const connection = mdbhandler.start();
 
-```javascript
-require('mongodb-handler/lib/server');
+connection.on('ready', (message) => {
+  console.log(message); // Notification when system is ready
+});
+
+connection.on('insert', (message) => {
+  console.log(message); // Notification when a document is insert
+});
+
+connection.on('bulkinsert', (message) => {
+  console.log(message); // Notification when documents are insert with bulk
+});
+
+connection.on('delete', (message) => {
+  console.log(message); // Notification when documents are deleted
+});
+
+connection.on('update', (message) => {
+  console.log(message); // Notification when documents are updated
+});
 ```
 
 ### Config ENV Variable

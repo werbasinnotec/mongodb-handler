@@ -2,15 +2,24 @@
 
 const assert = require('assertthat');
 const app = require('../lib/app.js');
+/* eslint-disable */
+let connection;
 
 describe('Mongodbhandler...', () => {
-  before(() => {
+  before((done) => {
     require('./dropDatabase')((err) => {
       if (err) {
         throw err;
       }
+
+      connection = app.start();
+
+      setTimeout(() => {
+        done();
+      }, 3000);
     });
   });
+/* eslint-enable */
 
   it('... insert is a function', (done) => {
     assert.that(app.insert).is.ofType('function');

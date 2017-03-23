@@ -1,6 +1,6 @@
 {
   "name": "mongodb-handler",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "easy NPM Modul to handle all important mongodb operations as global",
   "contributors": [
     {
@@ -15,10 +15,12 @@
   "main": "lib/app.js",
   "dependencies": {
     "bluebird": "3.5.0",
+    "events": "1.1.1",
     "express": "4.15.2",
     "mongodb": "2.2.24",
     "processenv": "0.1.1",
     "snooper": "0.0.6",
+    "util": "0.10.3",
     "validate": "3.0.1"
   },
   "repository": {
