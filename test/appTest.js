@@ -212,5 +212,18 @@ describe('Mongodbhandler...', () => {
         done();
       });
     });
+
+    it('... fetch with limits', (done) => {
+      app.fetch({ collection: 'unittest', doc: { text: 'foo' }, querys: { limit: 100, skip: 100, sort: [['counter', 'desc']] }}, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        assert.that(result[0].counter).is.equalTo(19899);
+        assert.that(result[99].counter).is.equalTo(19800);
+
+        done();
+      });
+    });
   });
 });

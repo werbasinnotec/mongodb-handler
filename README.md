@@ -50,6 +50,8 @@ connection.on('update', (message) => {
 -   collection: Defines the collection
 -   update: Defines the document on update
 -   doc: Defines the document
+-   querys: Defines the querys (See (here)[https://mongodb.github.io/node-mongodb-native/markdown-docs/queries.html#query-options])
+
 
 ### Usage
 
@@ -111,6 +113,8 @@ mdbhandler.fetch(options, (err, result) => {
     // Implementate your code here
     console.log(result);
 });
+
+
 ```
 
 #### Fetch last n documents:
