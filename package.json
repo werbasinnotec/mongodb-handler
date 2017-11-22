@@ -2,6 +2,10 @@
   "name": "mongodb-handler",
   "version": "1.1.2",
   "description": "easy NPM Modul to handle all important mongodb operations as global",
+  "scripts": {
+    "lint": "gulp lint",
+    "test": "gulp"
+  },
   "contributors": [
     {
       "name": "Joe Herwig",
@@ -12,11 +16,15 @@
       "email": "martin.wiesmueller@werbas-ag.com"
     }
   ],
+  "pre-commit": [
+    "test"
+  ],
   "main": "lib/app.js",
   "dependencies": {
     "bluebird": "3.5.1",
     "events": "1.1.1",
     "mongodb": "2.2.33",
+    "pre-commit": "1.2.2",
     "processenv": "0.1.1",
     "snooper": "0.0.6",
     "util": "0.10.3",

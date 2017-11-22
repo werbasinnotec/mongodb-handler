@@ -42,6 +42,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', shell.task([
+  'gulp lint',
   'gulp test'
 ]));
 /* eslint-enable no-process-exit */
