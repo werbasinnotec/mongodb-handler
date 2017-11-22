@@ -46,6 +46,16 @@ describe('Mongodbhandler...', () => {
     done();
   });
 
+  it('... validateObjectID is a function', (done) => {
+    assert.that(app.validateObjectID).is.ofType('function');
+    done();
+  });
+
+  it('... validateObjectID must return a objectid', (done) => {
+    assert.that(app.validateObjectID('592fe56fed807755eaefd461')).is.ofType('object');
+    done();
+  });
+
   describe('... callbacks an error...', () => {
     it('... when no options is defined', (done) => {
       app.insert(undefined, (err) => {
