@@ -56,23 +56,19 @@ describe('Mongodbhandler...', () => {
     done();
   });
 
-  describe('... callbacks an error...', () => {
+  describe('... throws an error...', () => {
     it('... when no options is defined', (done) => {
-      app.insert(undefined, (err) => {
-        if (err) {
-          assert.that(err).is.equalTo('options not defined');
-          done();
-        }
-      });
+      assert.that(() => {
+        app.insert(undefined);
+      }).is.throwing('Error: Function is called without any options or the optionobject is not complete!');
+      done();
     });
 
-    it('... when collection in options is not defined', (done) => {
-      app.insert({ }, (err) => {
-        if (err) {
-          assert.that(err).is.equalTo('collection is required in options');
-          done();
-        }
-      });
+    it('... when no options not complete is defined', (done) => {
+      assert.that(() => {
+        app.insert({});
+      }).is.throwing('Error: Function is called without any options or the optionobject is not complete!');
+      done();
     });
   });
 
@@ -234,6 +230,131 @@ describe('Mongodbhandler...', () => {
 
         done();
       });
+    });
+  });
+
+  describe('... when used promises / async await', () => {
+    /* eslint-disable no-unused-vars */
+    let flag = false;
+
+    beforeEach((done) => {
+      setTimeout(() => {
+        flag = true;
+
+        done();
+      }, 1500);
+    });
+
+    /* eslint-enable no-unused-vars */
+    it('... when a document is insert', (done) => {
+      (async () => {
+        try {
+          const result = await app.insert({ collection: 'unittest', doc: { foo: 'promisebar' }});
+
+          assert.that(result.result.ok).is.equalTo(1);
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
+    it('... when a document is delete', (done) => {
+      (async () => {
+        try {
+          const result = await app.delete({ collection: 'unittest', doc: { foo: 'promisebar' }});
+
+          assert.that(result.result.ok).is.equalTo(1);
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
+    it('... when a document updated', (done) => {
+      (async () => {
+        try {
+          await app.insert({ collection: 'unittest', doc: { foo: 'update-test' }});
+          await app.update({ collection: 'unittest', update: { foo: 'update-test' }, doc: { foo: 'updateAfterTest' }});
+
+          const res = await app.fetch({ collection: 'unittest', doc: { foo: 'updateAfterTest' }});
+
+          assert.that(res.length).is.greaterThan(0);
+          assert.that(res[0].foo).is.equalTo('updateAfterTest');
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
+    it('... when a document multi-updated', (done) => {
+      (async () => {
+        try {
+          await app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar2' }});
+          await app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar2' }});
+          await app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar2' }});
+          await app.findandupdate({ collection: 'unittest', update: { foo: 'bar2' }, doc: { foo: 'multinewbar' }});
+
+          const result = await app.fetch({ collection: 'unittest', doc: { test: 'multi' }});
+
+          assert.that(result[0].foo).is.equalTo('multinewbar');
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
+    it('... when a document fetched by objectid', (done) => {
+      (async () => {
+        try {
+          const insert = await app.insert({ collection: 'unittest', doc: { foo: 'fetchbar' }});
+
+          const res = await app.fetch({ collection: 'unittest', doc: { _id: insert.ops[0]._id.toString() }});
+
+          assert.that(res[0].foo).is.equalTo('fetchbar');
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
+    it('... when a bulk insert operation is running', (done) => {
+      (async () => {
+        const insertobj = [];
+
+        for (let i = 0; i < 20000; i++) {
+          insertobj.push({ counter: i, promisetext: 'Promise', promisevalue: 'Promisebar' });
+        }
+
+        try {
+          const result = await app.bulk({ collection: 'promistestbulk', doc: insertobj });
+
+          assert.that(result).is.ofType('object');
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
+    it('... when the last N documents are called', (done) => {
+      (async () => {
+        try {
+          const result = await app.fetchlastNdocuments({ collection: 'promistestbulk', doc: { promisetext: 'Promise' }, last: 3 });
+
+          assert.that(result[0].counter).is.equalTo(19999);
+          assert.that(result[1].counter).is.equalTo(19998);
+          assert.that(result[2].counter).is.equalTo(19997);
+
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
     });
   });
 });

@@ -55,7 +55,9 @@ connection.on('update', (message) => {
 
 ### Usage
 
-#### Insert a document:
+#### Insert a document
+
+##### When you want to work with callbacks:
 
 ```javscript
 mdbhandler.insert(options, (err, result) => {
@@ -67,6 +69,21 @@ mdbhandler.insert(options, (err, result) => {
 });
 ```
 
+##### Promise / Async await
+
+```javscript
+
+(async () => {
+  try {
+    const result = await mdbhandler.insert(options);
+  } catch (err) {
+    throw err;
+  }
+})();
+```
+
+
+
 #### Update a single document:
 
 ```javscript
@@ -77,6 +94,19 @@ mdbhandler.update(options, (err, result) => {
     // Implementate your code here
     console.log(result);
 });
+```
+
+##### Promise / Async await
+
+```javscript
+
+(async () => {
+  try {
+    const result = await mdbhandler.update(options);
+  } catch (err) {
+    throw err;
+  }
+})();
 ```
 
 #### Multiupdate document:
@@ -91,6 +121,19 @@ mdbhandler.findandupdate(options, (err, result) => {
 });
 ```
 
+##### Promise / Async await
+
+```javscript
+
+(async () => {
+  try {
+    const result = await mdbhandler.findandupdate(options);
+  } catch (err) {
+    throw err;
+  }
+})();
+```
+
 #### Delete a document:
 
 ```javscript
@@ -103,6 +146,19 @@ mdbhandler.delete(options, (err, result) => {
 });
 ```
 
+##### Promise / Async await
+
+```javscript
+
+(async () => {
+  try {
+    const result = await mdbhandler.delete(options);
+  } catch (err) {
+    throw err;
+  }
+})();
+```
+
 #### Fetch documents:
 
 ```javscript
@@ -113,8 +169,19 @@ mdbhandler.fetch(options, (err, result) => {
     // Implementate your code here
     console.log(result);
 });
+```
 
+##### Promise / Async await
 
+```javscript
+
+(async () => {
+  try {
+    const result = await mdbhandler.fetch(options);
+  } catch (err) {
+    throw err;
+  }
+})();
 ```
 
 #### Fetch last n documents:
@@ -133,6 +200,19 @@ mdbhandler.fetchlastNdocuments(options, (err, result) => {
 });
 ```
 
+##### Promise / Async await
+
+```javscript
+
+(async () => {
+  try {
+    const result = await mdbhandler.fetchlastNdocuments(options);
+  } catch (err) {
+    throw err;
+  }
+})();
+```
+
 #### Bulk insert documents:
 
 ```javscript
@@ -147,10 +227,22 @@ mdbhandler.bulk(options, (err, result) => {
 });
 ```
 
+##### Promise / Async await
+
+```javscript
+
+(async () => {
+  try {
+    const result = await mdbhandler.bulk(options);
+  } catch (err) {
+    throw err;
+  }
+})();
+
 ## License
 
 The MIT License (MIT)
-Copyright (c) 2015 Werbasinnotec.
+Copyright (c) 2017 Werbasinnotec.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

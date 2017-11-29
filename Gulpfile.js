@@ -30,7 +30,11 @@ gulp.task('test', () => {
 
 gulp.task('lint', function () {
   return gulp.src(paths.analyze).
-    pipe(eslint()).
+		pipe(eslint({
+      parserOptions: {
+        ecmaVersion: 8
+      }
+    })).
     pipe(eslint.format()).
     pipe(eslint.failAfterError());
 });

@@ -2,18 +2,18 @@ machine:
   timezone: Europe/Berlin
 
   node:
-    version: 5.1.0
+    version: 9.2.0
 
 dependencies:
   cache_directories:
     - mongodb-linux-x86_64-2.6.4
 
+  override:
+    - npm install
+    - npm install -g gulp
+
   pre:
-    - if [[ ! -d mongodb-linux-x86_64-2.6.4 ]]; then wget http://downloads.mongodb.org/linux/mongodb-linux-x86_64-2.6.4.tgz && tar xvzf mongodb-linux-x86_64-2.6.4.tgz; fi
-    - sudo /etc/init.d/mongodb stop
-    - sudo cp mongodb-linux-x86_64-2.6.4/bin/* /usr/bin
-    - sudo /etc/init.d/mongodb start
-    - npm install -g istanbul
+    - sudo apt-get install mongodb
 
 general:
   artifacts:
@@ -21,4 +21,4 @@ general:
 
 test:
   override:
-    - gulp test
+    - gulp

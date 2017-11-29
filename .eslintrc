@@ -16,32 +16,6 @@
  "globals": {
  },
 
- "ecmaFeatures": {
-   "arrowFunctions": true,
-   "binaryLiterals": true,
-   "blockBindings": true,
-   "classes": true,
-   "defaultParams": true,
-   "destructuring": true,
-   "forOf": true,
-   "generators": true,
-   "globalReturn": false,
-   "jsx": true,
-   "modules": false,
-   "objectLiteralComputedProperties": true,
-   "objectLiteralDuplicateProperties": false,
-   "objectLiteralShorthandMethods": true,
-   "objectLiteralShorthandProperties": true,
-   "octalLiterals": true,
-   "regexUFlag": true,
-   "regexYFlag": true,
-   "restParams": true,
-   "spread": true,
-   "superInFunctions": true,
-   "templateStrings": true,
-   "unicodeCodePointEscapes": true
- },
-
  "rules": {
    "comma-dangle": [ 2, "never" ],
    "no-cond-assign": [ 2, "always" ],
