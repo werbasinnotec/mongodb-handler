@@ -127,18 +127,26 @@ describe('Mongodbhandler...', () => {
     });
 
     it('... when a document updated', (done) => {
-      app.update({ collection: 'unittest', update: { foo: 'bar' }, doc: { foo: 'newbar' }}, (err) => {
+      app.insert({ collection: 'unitUpdateTest', doc: { foo: 'bar' }}, (err, result) => {
         if (err) {
           throw err;
         }
 
-        app.fetch({ collection: 'unittest', doc: {}}, (err2, result) => {
+        assert.that(result.result.ok).is.equalTo(1);
+
+        app.update({ collection: 'unitUpdateTest', update: { foo: 'bar' }, doc: { foo: 'newbar' }}, (err2) => {
           if (err2) {
             throw err2;
           }
 
-          assert.that(result[0].foo).is.equalTo('newbar');
-          done();
+          app.fetch({ collection: 'unitUpdateTest', doc: {}}, (err3, updateRes) => {
+            if (err3) {
+              throw err3;
+            }
+
+            assert.that(updateRes[0].foo).is.equalTo('newbar');
+            done();
+          });
         });
       });
     });
