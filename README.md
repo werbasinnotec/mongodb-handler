@@ -1,4 +1,4 @@
-# NPM Module mongodb-handler
+# Mongodb-handler
 
 This module handles all mongodb-transactions over a global calling.
 
@@ -7,6 +7,11 @@ This module handles all mongodb-transactions over a global calling.
 ```
 npm install mongodb-handler
 ```
+
+### What's new in v2
+
+- The module provides promises, now
+- Submit a userId to the modules eventlistener feature.
 
 ### Implementate in your project:
 
@@ -44,12 +49,12 @@ connection.on('update', (message) => {
 
 ### Config ENV Variable
 - MDBHANDLER_CONSTRING: Defines the connectionstring to the database. Default is: 'mongodb://localhost:27017/mdbtest';
-- MDBHANDLER_PORT: Defines the port where the mongodbhandler is listen. Default is 4444;
 
 ### Options (object)
 -   collection: Defines the collection
 -   update: Defines the document on update
 -   doc: Defines the document
+-   userId: On this property it's possible to set the unique identifier of an user where changed a document. This module will submit this property to the modules eventlistener.
 -   querys: Defines the querys (See (here)[https://mongodb.github.io/node-mongodb-native/markdown-docs/queries.html#query-options])
 
 
