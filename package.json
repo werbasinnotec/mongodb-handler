@@ -26,7 +26,6 @@
     "mongodb": "2.2.33",
     "pre-commit": "1.2.2",
     "processenv": "0.1.1",
-    "snooper": "0.0.6",
     "util": "0.10.3",
     "validate": "3.0.1"
   },
