@@ -228,7 +228,7 @@ describe('Mongodbhandler...', () => {
     });
 
     it('... fetch with limits', (done) => {
-      app.fetch({ collection: 'unittest', doc: { text: 'foo' }, querys: { limit: 100, skip: 100, sort: [[ 'counter', 'desc' ]]}}, (err, result) => {
+      app.fetch({ collection: 'unittest', doc: { text: 'foo' }, querys: { limit: '100', skip: '100', sort: '!counter' }}, (err, result) => {
         if (err) {
           throw err;
         }

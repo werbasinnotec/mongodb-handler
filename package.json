@@ -1,6 +1,6 @@
 {
   "name": "mongodb-handler",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "easy NPM Modul to handle all important mongodb operations as global",
   "scripts": {
     "lint": "gulp lint",
