@@ -334,6 +334,25 @@ describe('Mongodbhandler...', () => {
       })();
     });
 
+    it('... test fetching with sort', (done) => {
+      (async () => {
+        try {
+          await app.insert({ collection: 'unittest', doc: { test: 'sorttest', foo: 'A' }});
+          await app.insert({ collection: 'unittest', doc: { test: 'sorttest', foo: 'X' }});
+          await app.insert({ collection: 'unittest', doc: { test: 'sorttest', foo: 'C' }});
+
+          const result = await app.fetch({ collection: 'unittest', doc: { test: 'sorttest' }, querys: { sort: '!foo' }});
+
+          assert.that(result[0].foo).is.equalTo('X');
+          assert.that(result[1].foo).is.equalTo('C');
+          assert.that(result[2].foo).is.equalTo('A');
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
     it('... when a document fetched by objectid', (done) => {
       (async () => {
         try {
