@@ -315,6 +315,25 @@ describe('Mongodbhandler...', () => {
       })();
     });
 
+    it('... test fetching with paging and amount', (done) => {
+      (async () => {
+        try {
+          await app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar2' }});
+          await app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar2' }});
+          await app.insert({ collection: 'unittest', doc: { test: 'multi', foo: 'bar2' }});
+          await app.findandupdate({ collection: 'unittest', update: { foo: 'bar2' }, doc: { foo: 'multinewbar' }});
+
+          const result = await app.fetch({ collection: 'unittest', doc: { test: 'multi' }, querys: { getTotal: true, limit: 2 }});
+
+          assert.that(result.total).is.equalTo(9);
+          assert.that(result.data.length).is.equalTo(2);
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
     it('... when a document fetched by objectid', (done) => {
       (async () => {
         try {

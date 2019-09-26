@@ -57,6 +57,25 @@ connection.on('update', (message) => {
 -   userId: On this property it's possible to set the unique identifier of an user where changed a document. This module will submit this property to the modules eventlistener.
 -   querys: Defines the querys (See (here)[https://mongodb.github.io/node-mongodb-native/markdown-docs/queries.html#query-options])
 
+#### Additional query Parameters
+
+-   querys.getTotal: When this property is true, the fetch will response follow structure:
+
+
+````
+{
+  total: 400, // The totalamount of the query
+  data: [
+    .
+    .
+    .
+  ]
+}
+````
+
+This is necessary for the paging to transmit the complete content lenght.
+
+
 
 ### Usage
 
@@ -247,7 +266,7 @@ mdbhandler.bulk(options, (err, result) => {
 ## License
 
 The MIT License (MIT)
-Copyright (c) 2017 Werbasinnotec.
+Copyright (c) 2019 Werbasinnotec.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

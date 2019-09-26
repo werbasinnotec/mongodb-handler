@@ -1,6 +1,6 @@
 {
   "name": "mongodb-handler",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "easy NPM Modul to handle all important mongodb operations as global",
   "scripts": {
     "lint": "gulp lint",
@@ -23,7 +23,7 @@
   "dependencies": {
     "bluebird": "3.5.5",
     "events": "3.0.0",
-    "mongodb": "3.2.7",
+    "mongodb": "3.3.2",
     "pre-commit": "1.2.2",
     "processenv": "1.1.0",
     "util": "0.12.0",
