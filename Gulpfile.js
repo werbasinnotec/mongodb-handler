@@ -1,52 +1,26 @@
 'use strict';
 
-const eslint = require('gulp-eslint');
+const { ESLint } = require('eslint');
 const gulp = require('gulp');
 const mocha = require('gulp-mocha');
 const shell = require('gulp-shell');
-const watch = require('gulp-watch');
-const batch = require('gulp-batch');
 
+const esl = new ESLint({ errorOnUnmatchedPattern: false });
+const commands = {
+	test: 'LOG_LEVELS=info SYSID_INOBACKEND=famous nyc --reporter=lcovonly --reporter=text gulp mocha',
+};
 const paths = {
   analyze: [ '**/*.js', '!node_modules/**/*.js', '!coverage/**/*.js' ],
   tests: [ 'test/**/*Test.js' ]
 };
 
-/* eslint-disable no-process-exit */
-gulp.task('test', () => {
-  return gulp.src(paths.tests, { read: false }).
-  pipe(mocha({ timeout: 15000 })).
-  once('error', function (err) {
-    /* eslint-disable no-console */
-    console.log(err.stack);
-    /* eslint-enable no-console*/
+const taskTest = async () => shell.task([commands.test])();
+const taskLint = async () => console.log((await esl.loadFormatter('stylish')).format(await esl.lintFiles(paths.analyze))); // eslint-disable-line no-console
+const taskMocha = async () => gulp.src(paths.tests, { read: false })
+																	.pipe(mocha({ exit: true, timeout: 25000 }))
+																	.on('error', console.error); // eslint-disable-line  no-console
 
-    process.exit(1);
-  }).
-  once('end', function () {
-    process.exit();
-  });
-});
-
-gulp.task('lint', function () {
-  return gulp.src(paths.analyze).
-		pipe(eslint({
-      parserOptions: {
-        ecmaVersion: 8
-      }
-    })).
-    pipe(eslint.format()).
-    pipe(eslint.failAfterError());
-});
-
-gulp.task('watch', function () {
-  watch(paths.analyze, batch(function (events, done) {
-    gulp.start('default', done);
-  }));
-});
-
-gulp.task('default', shell.task([
-  'gulp lint',
-  'gulp test'
-]));
-/* eslint-enable no-process-exit */
+exports.test = gulp.series(taskTest);
+exports.mocha = gulp.series(taskMocha);
+exports.lint = gulp.series(taskLint);
+exports.default = gulp.series(taskLint, taskTest);
