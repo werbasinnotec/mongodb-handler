@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('assertthat');
+const { assert } = require('assertthat');
 const app = require('../lib/app.js');
 /* eslint-disable */
 let connection;
@@ -52,7 +52,10 @@ describe('Mongodbhandler...', () => {
   });
 
   it('... validateObjectID must return a objectid', (done) => {
-    assert.that(app.validateObjectID('592fe56fed807755eaefd461')).is.ofType('object');
+    const newId = app.validateObjectID('592fe56fed807755eaefd461');
+
+    assert.that(newId).is.ofType('object');
+    assert.that(newId.toHexString().length).is.equalTo(24);
     done();
   });
 
@@ -158,7 +161,15 @@ describe('Mongodbhandler...', () => {
         }
 
         assert.that(result.result.ok).is.equalTo(1);
-        done();
+
+        app.fetch({ collection: 'unittest', doc: { foo: 'newbar' }}, (err2, result2) => {
+          if (err2) {
+            throw err2;
+          }
+
+          assert.that(result2.length).is.equalTo(0);
+          done();
+        });
       });
     });
 
@@ -273,6 +284,10 @@ describe('Mongodbhandler...', () => {
           const result = await app.delete({ collection: 'unittest', doc: { foo: 'promisebar' }});
 
           assert.that(result.result.ok).is.equalTo(1);
+
+          const checkResult = await app.fetch({ collection: 'unittest', doc: { foo: 'promisebar' }});
+
+          assert.that(checkResult.length).is.equalTo(0);
           done();
         } catch (err) {
           throw err;
