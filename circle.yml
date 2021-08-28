@@ -1,24 +1,41 @@
-machine:
-  timezone: Europe/Berlin
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:14.15.5
+      - image: circleci/mongo:3.4
 
-  node:
-    version: 9.2.0
+    working_directory: ~/repo
+    environment:
+      - MDBHANDLER_CONSTRING: "mongodb://localhost:27017/data"
 
-dependencies:
-  cache_directories:
-    - mongodb-linux-x86_64-2.6.4
+    steps:
+      - checkout
 
-  override:
-    - npm install
-    - npm install -g gulp
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
-  pre:
-    - sudo apt-get install mongodb
+      - run:
+          name: Install Gulp as global
+          command: "sudo npm install -g gulp"
+      - run:
+          name: Setup NPM Configuration
+          command: 'echo "//registry.npmjs.org/:_authToken=0d88d8c8-b71b-435b-8b7e-16dd97e9180b" > .npmrc'
+      - run:
+          name: Install Dependencies
+          command: "npm install"
 
-general:
-  artifacts:
-    - "coverage"
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
 
-test:
-  override:
-    - gulp
+      # run tests!
+      - run: npm test
+      # - run: npm run analyze
+      - run: npm run docker:build
