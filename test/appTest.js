@@ -20,6 +20,10 @@ describe('Mongodbhandler...', () => {
     });
   });
 /* eslint-enable */
+  it('... insert is a function', (done) => {
+    assert.that(app.aggregate).is.ofType('function');
+    done();
+  });
 
   it('... insert is a function', (done) => {
     assert.that(app.insert).is.ofType('function');
@@ -111,7 +115,7 @@ describe('Mongodbhandler...', () => {
     });
 
     it('... when a document fetched by objectid', (done) => {
-      app.insert({ collection: 'unittest', doc: { foo: 'bar' }}, (err, result) => {
+      app.insert({ collection: 'unittest', doc: { foo: 'bar', binding: 'binding' }}, (err, result) => {
         if (err) {
           throw err;
         }
@@ -130,14 +134,14 @@ describe('Mongodbhandler...', () => {
     });
 
     it('... when a document updated', (done) => {
-      app.insert({ collection: 'unitUpdateTest', doc: { foo: 'bar' }}, (err, result) => {
+      app.insert({ collection: 'unitUpdateTest', doc: { foo: 'bar', binding: 'binding' }}, (err, result) => {
         if (err) {
           throw err;
         }
 
         assert.that(result.result.ok).is.equalTo(1);
 
-        app.update({ collection: 'unitUpdateTest', update: { foo: 'bar' }, doc: { foo: 'newbar' }}, (err2) => {
+        app.update({ collection: 'unitUpdateTest', update: { foo: 'bar' }, doc: { foo: 'newbar', binding: 'binding' }}, (err2) => {
           if (err2) {
             throw err2;
           }
@@ -151,6 +155,28 @@ describe('Mongodbhandler...', () => {
             done();
           });
         });
+      });
+    });
+
+    it('... test aggregation piplines', (done) => {
+      app.aggregate({
+        collection: 'unittest',
+        doc: [{
+          $lookup: {
+            from: 'unitUpdateTest',
+            localField: 'binding',
+            foreignField: 'binding',
+            as: 'outTest'
+          }
+        }
+      ]
+    }, (err, result) => {
+        if (err) {
+          throw err;
+        }
+
+        assert.that(result[1].outTest.length).is.greaterThan(0);
+        done();
       });
     });
 
@@ -305,6 +331,27 @@ describe('Mongodbhandler...', () => {
 
           assert.that(res.length).is.greaterThan(0);
           assert.that(res[0].foo).is.equalTo('updateAfterTest');
+          done();
+        } catch (err) {
+          throw err;
+        }
+      })();
+    });
+
+    it('... test aggreagation with async await', (done) => {
+      (async () => {
+        try {
+          const res = await app.aggregate({ collection: 'unittest', doc: [{ $lookup: {
+                from: 'unitUpdateTest',
+                localField: 'binding',
+                foreignField: 'binding',
+                as: 'outTest'
+              }
+            }
+          ]
+        });
+
+          assert.that(res[1].outTest.length).is.greaterThan(0);
           done();
         } catch (err) {
           throw err;
